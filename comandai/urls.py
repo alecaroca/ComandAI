@@ -21,7 +21,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="ComanAI APIDOC",
+      title="ComanAI API-DOC",
       default_version='v1',
       description="Documentacion de API ComandAI",
       terms_of_service="https://www.google.com/policies/terms/",
