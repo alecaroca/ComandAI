@@ -23,5 +23,9 @@ Gris  #383838
 }
 .container{
     color: #383838; 
+    border-radius: 20px;
 
+}
+.card{
+    border-radius: 20px;
 }
