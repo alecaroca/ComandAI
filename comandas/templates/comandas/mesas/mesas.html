@@ -1,0 +1,64 @@
+{% extends 'comandas/base.html' %}
+
+{% block contenido %}
+<script>
+  function eliminarmesas(id){
+    console.log(id)
+       Swal.fire({
+       "title": "¿Estas seguro?",
+       "text": "Esta acción no se puede deshacer",
+       "icon": "question",
+       "showCancelButton": true,
+       "cancelButtonText": "No, cancelar",
+       "confirmButtonText": "Si, eliminar",
+       "reverseButtons": true,
+       "confirmButtonColor": "darkred",
+       "cancelButtonColor": "green",
+    }) 
+    .then(function(result){
+      if(result.isConfirmed){
+        window.location.href ="/eliminar-mesas/"+id+"/"
+      }
+    })
+  }
+</script>
+
+
+
+<div class="table-responsive small">
+ <div class="text-center" text-align= "center"; >
+   MESAS &nbsp&nbsp<a href="{% url 'agregar_mesas' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a>
+ </div>
+  <br>
+  <table class="table table-striped table-sm">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">N° de mesa</th>
+        <th scope="col">Mesero</th>
+        <th scope="col">Activa</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for p in mesas %}
+      <tr>
+        <td>{{p.numero_mesa}}</td>
+        <td>{{p.mesero}}</td>
+        <td>
+          {% if p.activa %}
+          <i class="bi bi-check-circle-fill check" style = "color:green;"></i>
+          {% else %}
+          <i class="bi bi-x-circle-fill close" style = "color:red;"></i>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'modificar_mesas' p.id%}" class="bi bi-pencil-square" style = "color:green;"></a> &nbsp 
+          <a href="#" onclick="eliminarmesas({{ p.id }})" class="bi bi-trash3-fill" style = "color:red;"></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

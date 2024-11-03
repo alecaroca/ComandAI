@@ -1,0 +1,73 @@
+{% extends 'comandas/base.html' %}
+
+{% block contenido %}
+<script>
+  function eliminarUsuario(id){
+    console.log(id)
+       Swal.fire({
+       "title": "¿Estas seguro?",
+       "text": "Esta acción no se puede deshacer",
+       "icon": "question",
+       "showCancelButton": true,
+       "cancelButtonText": "No, cancelar",
+       "confirmButtonText": "Si, eliminar",
+       "reverseButtons": true,
+       "confirmButtonColor": "darkred",
+       "cancelButtonColor": "green",
+    }) 
+    .then(function(result){
+      if(result.isConfirmed){
+        window.location.href ="/eliminar-usuario/"+id+"/"
+      }
+    })
+  }
+</script>
+
+<div class="table-responsive small">
+  <div class="text-center" text-align= "center"; >
+    <h5>Usuarios</h5> 
+    <a href="{% url 'agregar_usuario' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a>
+   </div>
+    <br>
+  <table class="table table-striped table-sm">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Staff</th>
+        <th scope="col">Activo</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for p in usuarios %}
+      <tr>
+        <td>{{p.email}}</td>
+        <td>{{p.first_name}}</td>
+        <td>{{p.last_name}}</td>
+        <td>
+          {% if p.is_staff %}
+          <i class="bi bi-check-circle-fill check" style = "color:green;"></i>
+          {% else %}
+          <i class="bi bi-x-circle-fill close" style = "color:red;"></i>
+          {% endif %}
+        </td>
+        <td>
+          {% if p.is_active %}
+          <i class="bi bi-check-circle-fill check" style = "color:green;"></i>
+          {% else %}
+          <i class="bi bi-x-circle-fill close" style = "color:red;"></i>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'modificar_usuario' p.id%}" class="bi bi-pencil-square" style = "color:green;"></a> &nbsp 
+          <a href="#" onclick="eliminarUsuario({{ p.id }})" class="bi bi-trash3-fill" style = "color:red;"></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
