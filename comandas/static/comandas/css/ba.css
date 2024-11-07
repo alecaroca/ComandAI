@@ -58,13 +58,17 @@ header {
         top: 0;
         right: 0;
         bottom: 0;
-        background-color: #00bf63;
+        background-color: #7ed957;
         padding: 2rem;
         box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
+        transform: translateX(-200%);
+        transition: transform 0.2s ease;
     }
     .nav.visible{
         opacity: 1;
         visibility:  visible;
+        transform: translateX(0);
+        z-index: 1000;
     }
     .nav-list{
         flex-direction: column;
