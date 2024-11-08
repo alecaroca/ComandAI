@@ -22,10 +22,18 @@
     })
   }
 </script>
-
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Usuarios</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group me-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+    </div>
+  </div>
+</div>
 <div class="table-responsive small">
   <div class="text-center" text-align= "center"; >
-    <h5>Usuarios</h5> 
+    <h5>Agregar</h5> 
     <a href="{% url 'agregar_usuario' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a>
    </div>
     <br>
@@ -34,7 +42,6 @@
       <tr>
         <th scope="col">Email</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
         <th scope="col">Staff</th>
         <th scope="col">Activo</th>
         <th scope="col">Opciones</th>
@@ -45,7 +52,6 @@
       <tr>
         <td>{{p.email}}</td>
         <td>{{p.first_name}}</td>
-        <td>{{p.last_name}}</td>
         <td>
           {% if p.is_staff %}
           <i class="bi bi-check-circle-fill check" style = "color:green;"></i>

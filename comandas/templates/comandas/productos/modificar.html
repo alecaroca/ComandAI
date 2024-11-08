@@ -11,7 +11,7 @@
               {% csrf_token %}
               {{ form | crispy }}
               <div class="mt-4">
-                <input type="reset" value="Cancelar" class="btn btn-secondary w-100">
+                <a  value="Cancelar" class="btn btn-secondary w-100" href="{% url 'productos' %}">Cancelar</a>
                 <br><br>
                 <input type="submit" value="Editar" class="btn btn-primary w-100">
               </div>

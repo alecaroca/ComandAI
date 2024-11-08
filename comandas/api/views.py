@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from comandas.models import User 
 from comandas.api.serializers import UserSerializer
 
+
 class UserApiViewSet(ModelViewSet):
 
     serializer_class = UserSerializer

@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-en2qb0n*^(fds@@389b%log4b5vlw#0n1+p+%mqjc&qzgsj!x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
+# ALLOWED_HOSTS = ['https://localhost:8000','127.0.0.1','localhost','https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/accounts/login/?next=/','https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/','*']
+# CSRF_TRUSTED_ORIGINS = ["https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/",'https://localhost:8000']
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
@@ -43,10 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'corsheaders',
     'rest_framework',
     'comandas',
     'colorfield',
     'django.contrib.humanize',
+    'pwa',
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -55,6 +59,7 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -151,6 +156,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # USER ABSTRACT
 AUTH_USER_MODEL = 'comandas.User'
 
+#COORS
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
 # VARIABLES DE REDIRECCION DE LOGIN Y LOGOUT
 LOGIN_REDIRECT_URL = 'usuarios'
 LOGOUT_REDIRECT_URL = 'login'
+
+PWA_APP_NAME = "ComandAI"
+PWA_APP_DESCRIPTION = "Aplicacion para restaurantes y bares"
+PWA_APP_THEME_COLOR = "#7ed957"
+PWA_APP_BACKGROUND_COLOR = "#7ed957"
+
+PWA_APP_ICONS =[{
+    "src": "/static/comandas/img/icono.png",
+    "sizes": "160x160"
+}]
+
+PWA_APP_ICONS_APPLE =[{
+    "src": "/static/comandas/img/icono.png",
+    "sizes": "160x160"
+}]

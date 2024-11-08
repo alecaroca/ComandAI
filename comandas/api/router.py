@@ -8,7 +8,7 @@ from comandas.api.views import UserApiViewSet, UserView
 
 router_user = DefaultRouter()
 router_user.register(
-    prefix = 'users', basename='users', viewset=UserApiViewSet
+    prefix = 'users', basename='users', viewset= UserApiViewSet
 )
 
 urlpatterns = [

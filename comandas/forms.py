@@ -11,7 +11,7 @@ class ProductoForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "password1", "password2", "is_staff", "is_active", "groups" ]
+        fields = ["first_name", "last_name", "email", "password1", "password2", "is_staff", "is_active", "groups" ]
 
 class CategoriasForm(forms.ModelForm):
     class Meta:

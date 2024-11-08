@@ -5,13 +5,13 @@
     <div class="row">
       <div class="col-12 col-md-6 offset-md-3">
         <div class="card">
-          <div class="card-header text-center">Nueba mesa</div>
+          <div class="card-header text-center">Nueva mesa</div>
           <div class="card-body">
             <form action="" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {{ form | crispy }}
               <div class="mt-4">
-                <input type="reset" value="Cancelar" class="btn btn-secondary w-100">
+                <a  value="Cancelar" class="btn btn-secondary w-100" href="{% url 'mesas' %}">Cancelar</a>
                 <br><br>
                 <input type="submit" value="Guardar" class="btn btn-primary w-100">
               </div>

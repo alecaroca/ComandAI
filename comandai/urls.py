@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/', include('comandas.api.router')),
     path('api/', include(router_user.urls)),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('pwa.urls')),
 
 ]
 
