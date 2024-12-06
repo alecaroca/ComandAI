@@ -13,9 +13,66 @@
   </head>
   <body>
     <header>
-      <img class="logo" src="{% static 'comandas/img/logo.jpeg' %}" class="img-fluid" alt="Responsive image">
-      <button id="abrir" class="abrir-menu" ><i class="bi bi-list"></i></button>
-      <nav class="nav" id="nav">
+      <img class="logo" src="{% static 'comandas/img/logo.jpeg' %}" class="img-fluid" alt="">
+      <div class="d-flex justify-content-endr">
+        
+        <button type="button" class="btn  position-relative alertas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+          <h2><i class="bi bi-bell"></i></h2>
+          
+          <span id="nSolicitudes"  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            0
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <h1><button id="abrir" class="abrir-menu" ><i class="bi bi-list"></i></button></h1>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Solicitudes</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            {% for s in solicitudes %}
+            {% if s.estado == 0 %}
+            <form method="POST">
+              {% csrf_token %}
+              
+              <div class="card text-center pedi">
+                <div class="card-header pedi2 ">
+                  <div class=" d-flex align-items-center">
+                    
+                    <input name="id" type="number" class="form-control" value={{s.id}} hidden required>
+                    
+                    <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-warning">Pendiente de aprobación </span></div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Comensal: {{s.nombre}}</h5> 
+                  <h5 class="card-title">Mesa N° {{s.mesa.numero_mesa}}</h5> 
+                  <label  class="form-label " aria-placeholder="Selecciona">Estado</label>
+                      <select name ='estado' class="form-select" required  >
+                          <option  value= 0;1 >Aprobado</option>  
+                          <option  value= 2 >Rechazado</option>           
+                      </select>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                      <div class="col d-flex flex-row">
+                        <button type="submit" class="btn btn-success btn-sm w-100" style = "background-color:green;" name="solicitud">Actualizar solicitud</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </form>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <nav class=" nav " id="nav">
         <button class="cerrar-menu" id="cerrar"><i class="bi bi-x-circle"></i></button>
         <ul class="nav-list">
           <li><a href="#">Dashboard <i class="bi bi-house"></i></a></li>
@@ -32,16 +89,22 @@
           {% if perms.app.view_mesas %}
           <li><a href="{% url 'mesas' %}">Mesas <i class="bi bi-box"></i></a></li>
           {% endif %}
+          {% if perms.app.view_comandas %}
+          <li><a href="{% url 'comandas' %}">Comandas <i class="bi bi-journal-text"></i></a></li>
+          {% endif %}
+          {% if perms.app.view_mesas %}
+          <li><a href="{% url 'mismesas' 0 %}">Mis mesas <i class="bi bi-journal-text"></i></a></li>
+          {% endif %}
           {% if request.user.is_authenticated %}
-              <p>@ {{ user.username | upper }}</p>
-              <li><a href="{% url 'exit' %}"><i class="bi bi-box-arrow-right"></i></a></li>
+              <li><a >{{ user.username | upper }} <i class="bi bi-person-circle"></i></a></li>
+              <li><a href="{% url 'exit' %}">Salir <i class="bi bi-door-closed"></i></a></li>
           {% else %}
               <li><a href="{% url 'login' %}">Login</a></li>
           {% endif %}
         </ul>
       </nav>
     </header>
-    <div div class="container">
+    <div div class="container-xl">
       
       
         {% block contenido %}
@@ -55,9 +118,9 @@
       {% for m in messages %}
         <script>
           Swal.fire({
-            "title": "Felicitaciones",
             "text": "{{m}}",
-            "icon": "success"
+            "icon": "info",
+            "confirmButtonColor": "green"
           })
         </script>
       {% endfor %}

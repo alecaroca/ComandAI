@@ -1,0 +1,90 @@
+{% extends 'preparacion/preparacion_base.html' %}
+
+{% block titulo %}Preparación de Pedidos - ComandAI{% endblock %}
+{% block titulo_nav %}Preparación Pedidos{% endblock %}
+
+{% block contenido %}
+{% load static %}
+<div class="fila-comandas row g-4">
+    {% for comanda in comandas %}
+    <div class="col-12 col-md-4 col-lg-3">
+        <!-- Tarjeta principal de la comanda -->
+        <div class="tarjeta-comanda card shadow-sm h-100" data-id="{{ comanda.id }}">
+            <!-- Encabezado de la tarjeta -->
+            <div class="encabezado-comanda card-header">
+                <h5 class="titulo-comanda mb-0 d-flex justify-content-between align-items-center">
+                    Comanda #{{ comanda.id }}
+                    <!-- Tiempo total transcurrido -->
+                    <span class="tiempo-transcurrido" data-inicio="{{ comanda.tiempo_inicio }}">
+                        <i class="bi bi-stopwatch"></i> 
+                        <span class="tiempo-global-text">{{ comanda.tiempo_transcurrido }} min/seg.</span>
+                    </span>
+                </h5>
+            </div>
+
+            <!-- Cuerpo de la tarjeta -->
+            <div class="cuerpo-comanda card-body">
+                <!-- Detalle de la mesa y progreso de selección -->
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <p class="mesa-detalle">
+                            <strong>Mesa:</strong> {{ comanda.mesa|default:"Sin mesa" }}
+                        </p>
+                    </div>
+                    <div class="col-8 text-end">
+                        <p class="progreso-pedidos">
+                            {{ comanda.pedidos_seleccionados }} de {{ comanda.total_pedidos }} seleccionados
+                        </p>
+                    </div>
+                </div>
+                <!-- Lista de pedidos -->
+                <ul class="lista-pedidos">
+                    {% for pedido in comanda.pedidos %}
+                    <li class="item-pedido p-3 {% if pedido.estado == 3 %}seleccionado{% else %}border-start border-success{% endif %}" data-id="{{ pedido.id }}">
+                        <div class="d-flex align-items-center mb-2">
+                            <!-- Cantidad del producto -->
+                            <div class="cantidad-producto-circle">{{ pedido.cantidad }}</div>
+                            <!-- Nombre del producto -->
+                            <div class="texto-producto">
+                                <h6 class="nombre-producto {% if pedido.estado == 3 %}text-decoration-line-through{% endif %}">
+                                    {{ pedido.producto }}
+                                </h6>
+                            </div>
+                            <!-- Checkbox de selección -->
+                            <div class="ms-auto columna-checkbox">
+                                <input type="checkbox" class="checkbox-pedido form-check-input" 
+                                    {% if pedido.estado == 3 %}checked{% endif %}
+                                    data-id="{{ pedido.id }}"
+                                    data-comanda-id="{{ comanda.id }}">
+                            </div>
+                        </div>
+                        <!-- Tiempos del pedido -->
+                        <div class="d-flex justify-content-start tiempos-pedido">
+                            <p class="tiempo-estimado mb-0 me-3">
+                                <strong>Tiempo estimado:</strong> {{ pedido.tiempo_estimado }} min
+                            </p>
+                            <p class="tiempo-restante mb-0 {% if pedido.tiempo_excedido %}tiempo-excedido{% endif %}" data-inicio="{{ pedido.hora_ini }}">
+                                <strong>Tiempo transcurrido:</strong> <span class="tiempo-pedido-text">{{ pedido.tiempo_restante }} min/seg.</span>
+                            </p>
+                        </div>
+                        <!-- Notas del pedido -->
+                        <p class="notas-pedido mt-2">
+                            <strong>Nota:</strong> {{ pedido.notas|default:"Sin notas" }}
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- Botón para marcar como preparados -->
+                <button class="btn-comanda-lista btn w-100" data-id="{{ comanda.id }}" disabled>
+                    Marcar como preparados
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'comandas/js/preparacion.js' %}"></script>
+{% endblock %}

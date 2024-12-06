@@ -22,13 +22,15 @@
     })
   }
 </script>
-
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Mesas</h1>
+</div>
 
 
 <div class="table-responsive small">
   <div class="text-center" text-align= "center"; >
-   <h5>Mesas</h5> 
-   <a href="{% url 'agregar_mesas' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a>
+   <h3>Agregar</h3> 
+   <h3><a href="{% url 'agregar_mesas' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a></h3>
   </div>
   <br>
   <table class="table table-striped table-sm">
@@ -53,7 +55,7 @@
           {% endif %}
         </td>
         <td>
-          <a href="{% url 'modificar_mesas' p.id%}" class="bi bi-pencil-square" style = "color:green;"></a> &nbsp 
+          <a href="{% url 'modificar_mesas' p.id %}" class="bi bi-pencil-square" style = "color:green;"></a> &nbsp 
           <a href="#" onclick="eliminarmesas({{ p.id }})" class="bi bi-trash3-fill" style = "color:red;"></a>
         </td>
       </tr>

@@ -24,6 +24,7 @@ header {
     
 }
 
+
 .nav-list li a {
     text-decoration: none;
     color:  #00bf63;
@@ -38,14 +39,18 @@ header {
     color: #00bf63;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 1920px){
+    
     .abrir-menu,
     .cerrar-menu {
         display: block;
         border: 0;
-        font-size: 1.25rem;
+        gap: 1rem;
         background-color: transparent;
 
+    }
+    .alertas{
+        
     }
     .nav{
         opacity: 0;
@@ -58,7 +63,7 @@ header {
         top: 0;
         right: 0;
         bottom: 0;
-        background-color: #7ed957;
+        background-color: white;
         padding: 2rem;
         box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
         transform: translateX(-200%);
@@ -79,4 +84,47 @@ header {
         color: #383838;
     }
 
+}
+
+.redondos{
+    transition: transform .2s;
+    border-radius: 150px;
+    width: 80px;
+    height: 80px;
+    border:4px solid #00bf63;
+}
+.producto{
+    border-color: #00bf63;
+    background-color: #00bf63;
+}
+
+.redondos:hover{
+    transform: scale(1.2);
+}
+.nombreProducto{
+    text-align: center;
+    background-color: #00bf63;
+    color: white;
+}
+.carrusel{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+}
+.carrusel::-webkit-scrollbar {
+    display: none;
+  }
+
+.elemento{
+    flex: 1 0 auto;
+    padding: 8px;
+}
+.pedi{
+    border-color: #00bf63;
+    border:1,5px solid #00bf63;
+}
+
+.pedi2{
+    background-color: #7ed957;
+    color: white;
 }

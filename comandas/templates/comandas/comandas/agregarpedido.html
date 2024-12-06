@@ -1,0 +1,149 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+<script>
+  function eliminarpedido(id,idcomanda){
+    console.log(id)
+       Swal.fire({
+       "title": "¿Estas seguro?",
+       "text": "Esta acción no se puede deshacer",
+       "icon": "question",
+       "showCancelButton": true,
+       "cancelButtonText": "No, cancelar",
+       "confirmButtonText": "Si, eliminar",
+       "reverseButtons": true,
+       "confirmButtonColor": "darkred",
+       "cancelButtonColor": "green",
+    }) 
+    .then(function(result){
+      if(result.isConfirmed){
+        window.location.href ="/eliminar-pedido/"+id+"/"+idcomanda+"/"
+      }
+    })
+  }
+</script>
+{% load mathfilters %}
+{% load humanize %} 
+
+<div class="table-responsive small">
+  <div class="text-center" text-align= "center"; >
+    <h5>Comanda N° {{idcomanda}}</h5> 
+</div>
+<div class="text-center" text-align= "center"; >
+  <h5>Ver detalle</h5> 
+  <h2 href="" class="bi bi-cart4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style = "color:green;" ></h2>
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Detalle pedidos</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form method="POST">
+        
+        {% for pedidos in pedidos%} 
+        
+        <div class="card text-center pedi">
+            {% csrf_token %}
+          <input type="number" value="{{pedidos.id}}" hidden>
+          <div class="card-header pedi2 ">
+            Comensal: {{pedidos.comensal}}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{pedidos.producto}}</h5>
+            <p class="card-text">Cantidad : {{pedidos.cantidad}}</p>
+            
+          </div>
+          <div class="card-footer">
+            <div class="row">
+                <div class="col d-flex flex-row">
+                  {% if pedidos.notas %}
+                  <p>Notas : {{pedidos.notas}}</p>
+                  {% else %}
+                  <p>Notas : Sin notas</p>
+                  {% endif %}
+                </div>
+                <div class="col d-flex flex-row-reverse ">
+                  <h5><a href="#" onclick="eliminarpedido({{ pedidos.id }},{{ idcomanda}}) "class=" btn-danger btn-sm align-items-end bi bi-trash3-fill" style = "color:red;"></a></h5>
+                </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        {%  endfor %}
+        {% if vali == 0%}
+        <h5>Carrito vacio</h5>
+        {% else %}
+        <button type="submit" class="btn btn-success btn-sm w-100" style = "background-color:green;" name="todos">Confirmar pedido</button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+ </div>
+  <br>
+  <div class="row">
+      <div class="col-sm-12">   
+          <ul class="carrusel">
+              {% for c in categorias %}
+                  <div class="elemento text-center">
+                          <a class=""  href="{% url 'agregarpedido' idcomanda c.id %}"><img src="{{ c.imagen.url }}" class="redondos"></a>
+                          <p class="cat">{{c.nombre}}</p>
+                  </div>
+              {% endfor %}
+          </ul>
+      </div>
+  </div>
+
+  <br>
+
+  <div class="row row-cols-1 row-cols-md-3  g-4">
+    {% for p in productos %}
+    <form action="" id="form-login" method="POST">
+    {% csrf_token %} 
+      <div class="col">
+          <div class="card producto text-center">
+              <img src="{{ p.imagen.url }}" class="card-img-top imagenProducto" height="200px" width="150px" alt="...">
+                <div class="card-body text-center">
+                  <input value="{{p.id}}" name="producto"  hidden>
+                  <h5 class="card-title nombreProducto" >{{ p.nombre }}</h5>
+                  <input value="{{p.precio}}" name="precio"  hidden>
+                  <p class="card-text nombreProducto">${{ p.precio |mul:1.19 |floatformat:0 | intcomma }} </p>
+                  <!-- <p class="card-text nombreProducto">{{ p.descripcion }}</p> -->
+     
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <button class="btn btn-success btn-sm" type="button" onclick="adjustQuantity(this, -1)">-</button>
+                        <input name="cantidad" type="text" class="form-control form-control-sm text-center mx-2" value="1" min="1" style="width: 40px;">
+                        <button class="btn btn-success btn-sm" type="button" onclick="adjustQuantity(this, 1)">+</button>
+                    </div>
+                    <div class="mt-4">
+                    </div>
+                    <div class="input-group  mt-4">
+                      <label class="input-group-text input-group-sm" for="inputGroupSelect01">Comensal</label>
+                      <select name="comensal" class="form-select form-select-sm" id="inputGroupSelect01" required>                                   
+                        {% for co in comensales%}
+                        <option value={{co.id}}>{{co.nombre}}</option>
+                        {% endfor %}                   
+                      </select>
+                    </div>
+                    <div class="mt-4">
+                      <input class="form-control form-control-sm" type="text" name="notas" placeholder="Notas" >
+                    </div>
+                    <div class="d-flex text-center mt-4">
+                        <button class="btn btn-success btn-sm w-100 btnSubmit" type="submit" id="liveAlertBtn"  name="uno">Agregar</button>
+                    </div> 
+                </div>
+          </div>   
+      </div>
+    </form>
+      {% endfor %}
+  
+  </div>
+  <div class="mx-auto">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+      <div class="mx-auto" role="group" aria-label="Basic outlined example">
+        <a type="button" class="btn btn-success btn-sm" href="{% url 'comandas'  %}" >Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

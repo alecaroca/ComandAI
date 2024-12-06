@@ -1,0 +1,105 @@
+/* Barra superior fija con el nombre del comensal */
+.fixed-header {
+    background-color: #00bf63;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #ffffff;
+    position: fixed; /* Fijo */
+    top: 0;
+    z-index: 10;
+    width: 100%;
+}
+
+/* Menú inferior fijo */
+.footer-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    z-index: 10;
+}
+
+.footer-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.footer-nav li {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.footer-nav a {
+    color: #383838;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: color 0.3s, border 0.3s;
+}
+
+.footer-nav a i {
+    font-size: 1.5rem;
+    color: #383838;
+}
+
+.footer-nav a.selected {
+    border: 2px solid #00bf63;
+    color: #00bf63;
+}
+
+.footer-nav a.selected i {
+    color: #00bf63;
+}
+
+.carousel {
+    position: fixed;
+    top: 0px;
+}
+
+.categories-bar{
+    top: 195px !important;
+}
+
+#badge-confirmar {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #00bf63; /* Color corporativo */
+}
+
+/* Ajustes para el badge */
+.nav-item .badge {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #00bf63; /* Color corporativo */
+}
+
+
+/* Ajuste para asegurar que el badge esté en la opción "Confirmar" */
+.nav-item:nth-child(2) .badge {
+    position: absolute;
+    top: -10px; /* Ajusta según el diseño */
+    right: -5px; /* Ajusta según el diseño */
+}
+

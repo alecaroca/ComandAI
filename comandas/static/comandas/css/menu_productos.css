@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: black;
+
+}
+.redondos{
+    transition: transform .2s;
+    border-radius: 150px;
+    width: 80px;
+    height: 80px;
+    border:2px solid #00bf63;
+}
+.producto{
+    border-color: #00bf63;
+    background-color: #00bf63;
+
+
+}
+
+.redondos:hover{
+    transform: scale(1.5);
+}
+.nombreProducto{
+    text-align: center;
+    background-color: #00bf63;
+    color: white;
+}
+.carrusel{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+
+}
+.carrusel::-webkit-scrollbar {
+    display: none;
+  }
+
+.elemento{
+    flex: 1 0 auto;
+}
+p{
+    font-size: smaller;
+    color: black;
+}
+
+.cat{ 
+    color: white;
+    font-size: smaller;
+}
+header{
+background-color: white;
+padding-left: 20px;
+}

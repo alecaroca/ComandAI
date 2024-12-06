@@ -1,0 +1,90 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+{% load humanize %}
+{% load qr_code %}
+<div class="table-responsive small">
+  <div class="text-center" text-align= "center"; >
+      <h5>Mis Mesas</h5> 
+  <!--     <a href="{% url 'nuevacomanda' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a> -->
+  </div>
+  <br>
+  <div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ 
+      <div class="btn-group mx-auto" role="group" aria-label="Basic outlined example">
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'mismesas' 0 %}"  >Libres</a>
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'mismesas' 1 %}">Ocupadas</a>
+      </div>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-3">
+    {% for m in mesas %}
+    {% if  m.mesero.id == user.id %}
+
+    <div class="col">
+      <div class="card text-center">
+        <div class="card-header">
+           
+           <div class="d-flex align-items-center">
+              <strong role="status">Mesa N° {{m.numero_mesa}} </strong>
+              {% if m.estado == 0 %}
+         
+              <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-success">Libre</span></div>
+              {% else %}
+              <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-secondary">Ocupada</span></div>
+              {% endif %}
+            
+            
+          </div>
+        </div>
+        
+        <div class="card-body">      
+         
+          <div>
+            <h3 ><a type="button" class="bi bi-qr-code " data-bs-toggle="modal" data-bs-target="#staticBackdrop2-{{m.numero_mesa}}" style = "color:black;"></a></h3>
+            <div class="modal fade" id="staticBackdrop2-{{m.numero_mesa}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">QR</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="row justify-content-center align-items-center mt-3">
+                            <div class="col-10 ">
+                              {% with m.numero_mesa|stringformat:"s" as variable_str %}
+                              <img src='{% qr_url_from_text "http://127.0.0.1:8000/comensal/ingreso/?mesa="|add:variable_str %}' alt="QR Code">
+                              {% endwith %}       
+                            </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="mx-auto">
+                          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                            <div class="mx-auto" role="group" aria-label="Basic outlined example">
+                              <a type="button" class="btn btn-success btn-sm" href="{% url 'mismesas' 0 %}" >Volver</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+           
+
+        </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+</div>
+{% endblock %}

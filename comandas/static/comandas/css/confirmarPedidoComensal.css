@@ -1,0 +1,112 @@
+.container {
+    padding-top: 60px; /* Separación del título fijo */
+    padding-bottom: 120px; /* Espacio para evitar que el contenido quede tras el botón fijo */
+}
+
+.card {
+    border-left: 3px solid #00bf63; /* Borde verde corporativo más fino */
+    border-radius: 5px;
+    margin-bottom: 10px; /* Separación entre cards */
+    font-size: 0.9rem; /* Reducir el tamaño de texto general */
+}
+
+.card-header {
+    background-color: #f9f9f9; /* Fondo gris claro */
+    font-size: 1rem; /* Reducir tamaño del texto */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+}
+
+.flex-column-left {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9rem; /* Reducir tamaño del texto */
+}
+
+.flex-column-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column-right .btn-remove {
+    background-color: #fff; /* Fondo blanco */
+    color: #d9534f; /* Rojo del texto */
+    
+    font-size: 0.9rem; /* Reducir tamaño del botón */
+    padding: 5px 10px;
+    
+    cursor: pointer;
+}
+
+.flex-column-right .btn-remove:hover {
+    background-color: #f8d7da; /* Fondo rojo claro */
+    color: #a94442; /* Texto rojo más oscuro */
+}
+
+.fixed-title {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+    font-size: 1.2rem; /* Reducir tamaño del título */
+    border-bottom: 1px solid #ddd;
+}
+.fixed-button {
+    position: fixed;
+    bottom: 90px; /* Altura del menú inferior */
+    left: 0;
+    width: calc(100% - 20px); /* Ancho completo menos padding lateral */
+    margin: 0 10px; /* Espaciado a los lados */
+    z-index: 10;
+    padding: 15px 0; /* Tamaño del botón */
+    background-color: #00bf63;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+
+    
+}
+
+.fixed-button:hover {
+    background-color: #02894e; /* Verde más oscuro al pasar el mouse */
+}
+
+
+
+.scrollable-area {
+    overflow-y: auto; /* Habilitar solo el scroll vertical */
+    max-height: calc(100vh - 180px); /* Ajustar la altura máxima según la pantalla */
+    padding: 10px;
+    box-sizing: border-box; /* Asegura que el padding no expanda el contenedor */
+    border-top: 1px solid #ddd; /* Línea para separar visualmente */
+    margin-bottom: 20px; /* Espacio para no tocar el botón fijo */
+}
+
+/* Ajustes generales */
+.card-header .badge {
+    font-size: 0.8rem; /* Reducir tamaño de la etiqueta */
+}
+
+.card-header span {
+    font-weight: normal; /* Quitar negrita */
+}
+
+

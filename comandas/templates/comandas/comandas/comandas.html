@@ -1,0 +1,103 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+{% load humanize %}
+{% load qr_code %}
+<div class="table-responsive small">
+  <div class="text-center" text-align= "center"; >
+      <h3>Crear comanda</h3> 
+      <h3><a href="{% url 'nuevacomanda' %}" class="bi bi-plus-circle-fill " style = "color:green;"></a></h3>
+  </div>
+  <div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
+      <div class="btn-group mx-auto" role="group" aria-label="Basic outlined example">
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'listarcomandas' 0 %}"  >Abiertas</a>
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'listarcomandas' 1 %}">Cerradas</a>
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'comandas'  %}">Todas</a>
+      </div>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-3">
+    {% for c in comandas %}
+    {% if c.mesero.id == user.id %}
+    <div class="col">
+      <div class="card text-center">
+        <div class="card-header">
+           <div class="d-flex align-items-center">
+              <strong role="status">Comanda N° {{c.id}}  </strong><br>
+              {% if c.estado == 0 %}
+              <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-success">Abierta</span></div>
+              {% else %}
+              <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-secondary">Cerrada</span></div>
+              {% endif %}
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Mesa N° {{c.mesa.numero_mesa}}</h5>    
+          <div class="ms-auto" aria-hidden="true">              
+
+          </div> 
+          <a href="{% url 'detallecomandas' c.id 0 %}" class="btn btn-success btn-sm">Ver detalles</a>
+          {% if c.estado == 0 %}
+          <a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{c.id}}">
+             Add comensal
+          </a>
+          <a href="{% url 'agregarpedido' c.id 1 %}"  class="btn btn-success btn-sm"> Add pedidos</a>
+          {% endif %}
+          <div class="modal fade" id="staticBackdrop-{{c.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuevo comensal</h1>
+                  
+                  
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name></button>
+                </div>
+                <div class="modal-body">
+                
+                      <div class="row justify-content-center align-items-center mt-3">
+                        <div class="col-10 ">
+                          <div class="card">
+                            <div class="card-header text-center">Ingresar comensal</div>
+                            
+                            <div class="card-body ">
+                              <form action="" method="post" name="form" id="form">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                  <input name="comanda" type="number" class="form-control" id="exampleFormControlInput1" value={{c.id}}  required hidden>
+                                  <span class="input-group-text">Nombre</span>
+                               
+                                  <input type="text" name="nombre" aria-label="First name" class="form-control" required>
+                                </div>
+                                <div class="mt-4">
+                                  <input type="submit" value="Guardar" class="btn btn-success w-100" name="nuevocomansal">
+                                </div>
+                              </form>
+                              {{mensaje}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+        {% if c.estado == 0 %}
+        <div class="card-footer text-body-secondary"> 
+        Creación:  {{c.fecha_ini}}
+        <a type="button" class="btn btn-success btn-sm cierrecunta" href="{% url 'desglosecuenta' c.id %}">Generar cuenta</a>
+        {% else %}
+        <div class="card-footer text-body-secondary">
+        Cierre:  {{c.fecha_fin}}
+        {% endif%}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,239 @@
+body {
+    background-color: #f2f2f2;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-preparacion {
+    color: #383838;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.tarjeta-comanda {
+    border: 1px solid #383838;
+    border-radius: 8px;
+}
+
+.encabezado-comanda {
+    background-color: #383838;
+    color: #ffffff;
+}
+
+.lista-pedidos {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.item-pedido {
+    background-color: #f8f9fa;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    border-left: 4px solid #00bf63; /* Indicador de estado inicial */
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.item-pedido.seleccionado {
+    border: 1px solid #00bf63; /* Cambia a borde completo al seleccionar */
+    background-color: #e6f9ec; /* Fondo claro al seleccionar */
+}
+
+.cantidad-producto-circle {
+    background-color: #00bf63;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.tiempos-pedido {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.tiempo-restante, .tiempo-estimado {
+    font-size: 14px;
+    color: #383838;
+    font-weight: normal;
+}
+
+.tiempo-excedido {
+    color: #ff0000; /* Color rojo para tiempos excedidos */
+}
+
+.btn-comanda-lista {
+    margin-top: 10px;
+    border: 1px solid #00bf63;
+    color: #00bf63;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-comanda-lista:hover {
+    background-color: #00bf63;
+    color: #ffffff;
+}
+
+.checkbox-pedido {
+    transform: scale(1.5);
+    margin: 0;
+    cursor: pointer;
+}
+
+.tiempo-transcurrido {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.logo {
+    width: 170px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Nueva regla específica para tiempo-global-text */
+.tiempo-global-text {
+    font-size: 14px;
+    color: #ffffff; /* Color blanco para destacar */
+    font-weight: normal;
+}
+
+/* Ajuste general para el número de la comanda */
+.titulo-comanda {
+    font-size: 16px; /* Tamaño estándar para escritorio */
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.mesa-detalle {
+    font-size: 13px; /* Reduce el tamaño del texto */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+/* Media queries */
+@media (max-width: 1200px) {
+    .titulo-preparacion {
+        font-size: 22px;
+    }
+
+    .titulo-comanda {
+        font-size: 14px;
+    }
+
+    .tiempo-global-text {
+        font-size: 14px;
+    }
+
+    .cantidad-producto-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .btn-comanda-lista {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .item-pedido {
+        margin-bottom: 6px;
+    }
+}
+
+@media (max-width: 992px) {
+    .titulo-preparacion {
+        font-size: 20px;
+    }
+
+    .titulo-comanda {
+        font-size: 15px;
+    }
+
+    .tiempo-global-text {
+        font-size: 11px;
+    }
+
+    .cantidad-producto-circle {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+
+    .btn-comanda-lista {
+        font-size: 13px;
+        padding: 7px;
+    }
+
+    .item-pedido {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo-preparacion {
+        font-size: 18px;
+    }
+
+    .titulo-comanda {
+        font-size: 14px;
+    }
+
+    .tiempo-global-text {
+        font-size: 10px;
+    }
+
+    .cantidad-producto-circle {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+
+    .btn-comanda-lista {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .item-pedido {
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .titulo-preparacion {
+        font-size: 16px;
+    }
+
+    .titulo-comanda {
+        font-size: 13px;
+    }
+
+    .tiempo-global-text {
+        font-size: 9px;
+    }
+
+    .cantidad-producto-circle {
+        width: 22px;
+        height: 22px;
+        font-size: 9px;
+    }
+
+    .btn-comanda-lista {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+    .item-pedido {
+        margin-bottom: 3px;
+    }
+}

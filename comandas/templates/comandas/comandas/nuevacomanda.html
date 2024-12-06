@@ -1,0 +1,43 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+{% load static %}
+{% load crispy_forms_tags %}
+    <div class="row">
+      <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header text-center">Nueva comanda</div>
+            <div class="card-body">
+              <form action="" name="form" id="form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                          <div class="mt-4">
+                            <input name="mesero" type="number" class="form-control" id="exampleFormControlInput1" value={{user.id}} hidden required>
+                            <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Mesa</label>
+                                    <select name ='mesa' class="form-select" aria-label="Default select example" required >                                     
+                                        {% for m in mesas%}
+                                        {% if user.id == m.mesero_id%}
+                                        {% if m.estado == 0%}
+                                        <option value={{m.id}}>{{m.numero_mesa}}</option>
+                                        {% endif %}
+                                        {% endif%}
+                                        {% endfor %}                    
+                                    </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label" aria-placeholder="Selecciona" hidden>Estado</label>
+                                <select name ='estado' class="form-select" aria-label="Default select example" required aria-placeholder="selecciona"hidden >
+                                    <option  value= 0 >Abierta</option>                                         
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <input type="submit" value="Guardar" class="btn btn-success w-100" >
+                                <br><br>
+                                <a value="Cancelar" class="btn btn-secondary w-100" href="{% url 'comandas' %}">Cancelar</a> 
+                            </div>
+                          </div>
+              </form> {{mensaje}}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

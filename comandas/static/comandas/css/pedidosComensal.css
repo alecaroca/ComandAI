@@ -1,0 +1,72 @@
+/* Encabezado fijo */
+.fixed-header-pedidos {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    position: sticky;
+    top: 48px;
+    z-index: 10;
+    border-bottom: 1px solid #ddd;
+    
+}
+
+/* Tabs con estilos corporativos */
+.nav-underline .nav-link {
+    color: #383838;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: color 0.3s, border 0.3s;
+}
+
+.nav-underline .nav-link.active {
+    color: #00bf63;
+    border-bottom: 3px solid #00bf63;
+}
+
+.nav-underline .nav-link:hover {
+    color: #7ed957;
+}
+
+/* Área de scroll */
+.scrollable-area {
+    margin-top: 70px;
+    margin-bottom: 80px;
+    padding: 10px;
+    overflow-y: auto;
+    height: calc(100vh - 210px); /* Ajuste según header y footer */
+}
+
+/* Card de pedido */
+.card {
+    margin-bottom: 15px;
+    border: none;
+    border-left: 4px solid; /* Dinámico según estado */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card .card-header {
+    background-color: #f8f9fa;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card .card-body {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.card .card-body .product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.card .card-body .product-quantity {
+    font-size: 1rem;
+    font-weight: 500;
+}

@@ -1,0 +1,86 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+{% load mathfilters %}
+{% load humanize %}
+<div class="table-responsive small">
+  <div class="text-center" text-align= "center"; >
+      <h5>Detalle Comanda N° {{ids}}</h5> 
+  </div>
+  <br>
+  <div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ 
+      <div class="btn-group mx-auto" role="group" aria-label="Basic outlined example">
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'detallecomandas' ids 0 %}"  >Preparacion</a>
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'detallecomandas' ids 2 %}" >Pendiente
+          <span class="badge text-bg-warning">{{pendientes}}</span>
+        </a>
+        <a type="button" class="btn btn-outline-success btn-sm" href="{% url 'detallecomandas' ids 1 %}" >Entregado</a>
+      </div>
+    </div>
+ 
+    <div >
+      <div class="row row-cols-1 row-cols-md-3 g-3">         
+          {% for p in pedidos %}
+          <form action="" id="form" method="POST">
+          {% csrf_token %}
+                  
+            <div class="card text-center">
+              <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <input type="number" name="idpedido" value="{{p.id}}" hidden >
+                    <strong role="status">Pedido N° {{p.id}} </strong>
+                    {% if p.estado == 0 %}
+                    <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-success">Preparacion</span></div>
+                    {% elif p.estado == 1 %}
+                    <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-secondary">Entregado</span></div>
+                    {% else %}
+                    <div class="ms-auto" aria-hidden="true"><span class="badge rounded-pill text-bg-warning">Pendiente</span></div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="card-body">
+                  <h5 class="card-title">Comensal: {{p.comensal}}</h5>    
+                  <h5 class="card-title">{{p.producto}}</h5> 
+                  {% for pro in productos%}
+                  {% if p.producto_id == pro.id %}
+                  <img src="{{  pro.imagen.url  }}" class="card-img-top imagenProducto" alt="...">  
+                  {% endif %}
+                  {% endfor %}
+                  <br>        
+              </div>
+              {% if p.total_pedido == 0 %}
+              <div class="card-footer ">
+              total:  $ 0
+              </div>
+              {% else %}
+              <div class="card-footer   "><br>
+                <div class="d-flex ">
+                  <p class="mx-auto">Cantidad:  {{p.cantidad}}</p>
+                  <p class="mx-auto">Total:  ${{p.total_pedido|mul:1.19 |floatformat:0 | intcomma}}</p>
+                </div>
+                {% if p.estado == 2%}
+                <button href="#" type="submit" class="btn btn-success btn-sm mx-auto">Entregar</button>
+                {% endif%}
+                {% endif %}
+              </div>
+            </div><br>         
+          
+          </form>
+          {% endfor %} 
+        </div>
+
+      </div>
+      <div class="mx-auto">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+          <div class="mx-auto" role="group" aria-label="Basic outlined example">
+            <a type="button" class="btn btn-success btn-sm" href="{% url 'comandas'  %}" >Volver</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

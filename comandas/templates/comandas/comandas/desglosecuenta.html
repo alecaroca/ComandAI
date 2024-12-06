@@ -1,0 +1,109 @@
+{% extends 'comandas/base.html' %}
+{% block contenido %}
+{% load static %}
+{% load mathfilters %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+          
+          <div class="text-center">Cuenta Comanda N° {{id}}</div><hr>
+            
+              <form action="" name="form" id="form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                              {% for de in detallePedidos %}
+                              
+                                <table class="table table-sm align-middle">
+                                  <thead class="table-dark">
+                                    <tr>
+                                      <th scope="col">N°</th>
+                                      <th scope="col">Cliente</th>
+                                      <th scope="col">Producto</th>
+                                      <th scope="col">Valor</th>
+                                      <th scope="col">Cant.</th>
+                                      <th scope="col">Total</th>
+                                    </tr>
+                                  </thead>
+                                {% for co in detallecomensa %}                                
+                                {% if co.comensal.id == de.comensal %}                             
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">{{co.id}}</th>                      
+                                      <td>{{co.comensal}}</td>
+                                      <td>{{co.producto}}</td>
+                                      <td>${{co.producto.precio |mul:1.19 |floatformat:0 | intcomma }}</td>
+                                      <td>{{co.cantidad}}</td>
+                                      <td>${{co.total_pedido |mul:1.19 |floatformat:0 | intcomma }}</td>
+                                    </tr>                        
+                                  </tbody>
+                                {% endif %}
+                                {% endfor %}   
+
+                              </table>
+                             
+                             <div class="d-flex flex-row-reverse">
+                             
+                              Total neto: $ {{ de.total | intcomma}}
+                              <br>
+                              {% for iva in iva %} 
+                              {% if iva.comensal == de.comensal %}  
+                              IVA:         
+                              $ {{ iva.total | intcomma}}  
+                              {% endif %}
+                              {% endfor %}
+                              <br>
+
+                              {% for coniva in coniva %} 
+                              {% if coniva.comensal == de.comensal %}  
+                              Sub-Total: 
+                              $ {{ coniva.total | intcomma}} 
+                              {% endif %} 
+                              {% endfor %} 
+
+                              <br>
+                              {% for propinasola in propinasola %} 
+                              {% if propinasola.comensal == de.comensal %}  
+                              Propina 10%: 
+                              $ {{ propinasola.total | intcomma}} 
+                              {% endif %} 
+                              {% endfor %} 
+
+                              <br>
+
+                              {% for propina in propina %} 
+                              {% if propina.comensal == de.comensal %} 
+                              Total: 
+                              $ {{ propina.total | intcomma }}
+                              {% endif %}  
+                              {% endfor %}
+
+                             </div>
+                              <hr>                              
+                              {% endfor %}
+                              <div class="mb-3 text-center" >
+
+                                    <h3>Total comanda</h3>
+                                    Neto  : $ {{ TotalDetallePedidos.total | intcomma}} <br>                            
+                                    IVA   : $ {{ TotalIva.total | intcomma}} <br>                              
+                                    Sub-Total: $ {{ TotalConiva.total | intcomma}} <br>                                   
+                                    Propina 10%:  $ {{ TotalPropinasola.total | intcomma}} <br>                                    
+                                    Total cuenta: $ {{ TotalPropina.total | intcomma }}                                  
+                                    <hr>                      
+                              </div>
+                             
+                            <div class="col-8  mx-auto text-center">
+                              
+                              <label  class="form-label " aria-placeholder="Selecciona">Medio de pago</label>
+                              <select name ='medio_pago' class="form-select" required  >
+                                  <option  value= 0 >Efectivo</option>  
+                                  <option  value= 1 >Transferencia</option> 
+                                  <option  value= 2 >Tarjetas</option>            
+                              </select><br>
+                                <input type="submit" value="Pagar" class="btn btn-success text-center" >
+                                <a value="Cancelar" class="btn btn-secondary mx-auto" href="{% url 'comandas' %}">Cancelar</a> 
+                                <br><hr>
+                            </div>                        
+              </form> {{mensaje}}
+          </div>
+
+{% endblock %}
