@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-en2qb0n*^(fds@@389b%log4b5vlw#0n1+p+%mqjc&qzgsj!x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
-# ALLOWED_HOSTS = ['https://localhost:8000','127.0.0.1','localhost','https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/accounts/login/?next=/','https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/','*']
-# CSRF_TRUSTED_ORIGINS = ["https://urban-space-spoon-gvpwr7wjg5xf9x4v-8000.app.github.dev/",'https://localhost:8000']
+#ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['https://localhost:8000','127.0.0.1','localhost',"https://urlapp",'*']
+CSRF_TRUSTED_ORIGINS = ["https://urlapp",'https://localhost:8000']
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
@@ -51,6 +51,10 @@ INSTALLED_APPS = [
     'colorfield',
     'django.contrib.humanize',
     'pwa',
+    'comensal',
+    'qr_code',
+    'mathfilters',
+    "django_browser_reload",
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -65,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 # Variables crispy form
@@ -84,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'comandas.context_processors.solicitudes',
             ],
         },
     },
@@ -122,18 +128,23 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '500/minute',  # 5 solicitudes por minuto para usuarios no autenticados
+        'user': '1000/minute',  # 10 solicitudes por minuto para usuarios autenticados
+    },
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -159,6 +170,11 @@ AUTH_USER_MODEL = 'comandas.User'
 #COORS
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "Authorization",
+    "Content-Type",
+    "X-CSRFToken",
+]
 
 # VARIABLES DE REDIRECCION DE LOGIN Y LOGOUT
 LOGIN_REDIRECT_URL = 'usuarios'
@@ -178,3 +194,33 @@ PWA_APP_ICONS_APPLE =[{
     "src": "/static/comandas/img/icono.png",
     "sizes": "160x160"
 }]
+
+PWA_APP_SPLASH_SCREEN = [
+    {
+        "src": "/static/comandas/img/logo.png",
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+
+# Configuración de JWT para SimpleJWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # Duración del token de acceso
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Duración del token de refresco
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'rate-limit-cache',
+    }
+}
+
+API_BASE_URL = "http://127.0.0.1:8000/api/"

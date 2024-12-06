@@ -5,7 +5,7 @@ pip install django
 python.exe -m pip install --upgrade pip
 pip install djangorestframework
 pip install drf-yasg
-npm i bootstrap@5.3.3
+# npm i bootstrap@5.3.3
 pip install djangorestframework-simplejwt
 pip install pillow
 pip install crispy-bootstrap5
@@ -13,3 +13,27 @@ pip install django-admin-interface
 python -m pip install django-cors-headers
 pip install requests
 pip install django-pwa
+pip install django-mathfilters
+pip install django-qr-code
+python -m pip install django-browser-reload
+
+# Para hacer commit
+# git add .
+# git commit -m "nombre"
+# git push
+
+#saber en que rama está trabajando
+# git branch
+
+#crear rama
+#git branch nombre_rama
+
+#cambiar de rama
+# git checkout nombre_rama
+
+# saber si hay cambios en la rama
+#git fetch
+
+#traer nuevos cambios de rama
+#git pull
+#

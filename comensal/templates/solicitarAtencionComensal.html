@@ -1,0 +1,65 @@
+{% extends 'baseComensal.html' %}
+{% load static %}
+
+{% block title %}Menú - ComandAI{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'comandas/css/menuComensal.css' %}">
+<script defer src="{% static 'comandas/js/menuComensal.js' %}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+<div class="menu-container">
+    <!-- Slider -->
+    <div id="menuSlider" class="carousel slide slider" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'comandas/img/slider1.jpg' %}" class="d-block w-100" alt="Slider 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'comandas/img/slider2.jpg' %}" class="d-block w-100" alt="Slider 2">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'comandas/img/slider3.jpg' %}" class="d-block w-100" alt="Slider 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#menuSlider" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#menuSlider" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Categorías -->
+    <div class="categories-bar">
+        {% for categoria in categorias %}
+        <div class="category-item {% if forloop.first %}selected{% endif %}" data-id="{{ categoria.id }}">
+            <img src="{{ categoria.imagen }}" alt="{{ categoria.nombre }}" class="category-icon">
+            <span>{{ categoria.nombre }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Productos -->
+    <div class="products-list">
+        {% for producto in productos %}
+        <div class="product-card">
+            <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" class="product-image">
+            <div class="product-details">
+                <h5>{{ producto.nombre }}</h5>
+                <p>{{ producto.descripcion }}</p>
+                <p class="product-price">${{ producto.precio }}</p>
+                <div class="quantity-selector">
+                    <button class="btn-quantity" data-action="decrease">-</button>
+                    <span class="quantity">1</span>
+                    <button class="btn-quantity" data-action="increase">+</button>
+                </div>
+                <button class="add-to-cart-btn">Agregar a Pedido</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

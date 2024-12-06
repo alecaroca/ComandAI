@@ -1,0 +1,26 @@
+{% extends 'baseComensal.html' %}
+{% load static %}
+
+{% block title %}Confirmar Pedido{% endblock %}
+{% block head %}
+<script>
+    const COMANDA_ID = "{{ comanda_id }}";
+    const comensalToken = "{{ comensal_token }}";
+    const pedidosIniciales = "{{ pedidos_cantidad|default:0 }}";
+</script>
+<link rel="stylesheet" href="{% static 'comandas/css/confirmarPedidoComensal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-3 sticky-header-pedidos" id="titulo-pedidos">Pedidos por Confirmar</h3>
+    <div class="scrollable-area" id="pedido-list">
+        <!-- Las cards de pedidos serán renderizadas aquí -->
+    </div>
+    <div class="fixed-footer">
+        <button id="confirmar-pedido-btn" class="btn btn-success fixed-button">Confirmar Pedido</button>
+    </div>
+</div>
+
+<script defer src="{% static 'comandas/js/confirmarPedidoComensal.js' %}"></script>
+{% endblock %}

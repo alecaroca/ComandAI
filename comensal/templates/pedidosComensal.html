@@ -1,0 +1,41 @@
+{% extends 'baseComensal.html' %}
+{% load static %}
+
+{% block title %}Mis Pedidos{% endblock %}
+{% block head %}
+<script>
+    const COMANDA_ID = "{{ comanda_id }}";
+    const comensalToken = "{{ comensal_token }}";
+</script>
+<link rel="stylesheet" href="{% static 'comandas/css/pedidosComensal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Título y Tabs -->
+    <div class="fixed-header-pedidos">
+        <h3 class="text-center my-3">Mis Pedidos</h3>
+        <div id="pedidos-tabs">
+            <ul class="nav nav-underline justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" data-status="0" href="#">En Preparación</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-status="2" href="#">Preparados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-status="1" href="#">Entregados</a>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+
+    <!-- Listado de Pedidos -->
+    <div class="scrollable-area" id="pedido-list">
+        <!-- Aquí se cargarán los pedidos dinámicamente -->
+    </div>
+</div>
+
+<script defer src="{% static 'comandas/js/pedidosComensal.js' %}"></script>
+{% endblock %}
